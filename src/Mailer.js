@@ -11,10 +11,10 @@ import MandrilService from './MandrilService'
 export default class Mailer {
 
   constructor(app) {
-    new MandrilService(app)
-
     this.app = app;
     this.mailer = app.get('mailer')
+
+    if(this.app.config.MANDRILL_APIKEY || app.config.mandrill.api_key) new MandrilService(app)
 
     this._services = [];
     this.mailer.gather('service', this._registerService.bind(this))
