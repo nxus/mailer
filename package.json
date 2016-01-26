@@ -1,0 +1,45 @@
+{
+  "name": "@nxus/mailer",
+  "version": "2.0.0",
+  "description": "A Nxus module for sending emails.",
+  "main": "./lib/Mailer.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha --compilers js:babel/register -R spec",
+    "compile": "babel --optional runtime -d lib/ src/",
+    "prepublish": "npm run compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nxus/mailer.git"
+  },
+  "keywords": [
+    "nxus",
+    "email",
+    "mailer"
+  ],
+  "author": "mjreich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nxus/mailer/issues"
+  },
+  "homepage": "https://github.com/nxus/mailer#readme",
+  "dependencies": {
+    "babel-runtime": "^5.7.0",
+    "bluebird": "^3.0.5",
+    "mandrill-api": "^1.0.45",
+    "moment": "^2.11.1",
+    "underscore": "^1.7.0"
+  },
+  "peerDependencies": {
+    "@nxus/core": "^2.1.0"
+  },
+  "devDependencies": {
+    "@nxus/core": "^2.1.0",
+    "babel": "^5.6.23",
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
+    "mocha": "^2.2.5",
+    "should": "^7.0.2",
+    "sinon": "^1.17.2"
+  }
+}
