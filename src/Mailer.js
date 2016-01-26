@@ -6,7 +6,7 @@
 
 'use strict';
 
-import MandrilService from './MandrilService'
+import MandrillService from './MandrillService'
 
 export default class Mailer {
 
@@ -14,7 +14,7 @@ export default class Mailer {
     this.app = app;
     this.mailer = app.get('mailer')
 
-    if(this.app.config.MANDRILL_APIKEY || app.config.mandrill.api_key) new MandrilService(app)
+    if(this.app.config.MANDRILL_APIKEY || app.config.mandrill.api_key) new MandrillService(app)
 
     this._services = [];
     this.mailer.gather('service', this._registerService.bind(this))

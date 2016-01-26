@@ -7,7 +7,7 @@
 'use strict';
 
 import Mailer from '../src/Mailer'
-import MandrilService from '../src/MandrilService'
+import MandrillService from '../src/MandrillService'
 
 import TestApp from '@nxus/core/lib/test/support/TestApp';
 
@@ -60,7 +60,7 @@ describe("MandrilService", () => {
   });
   describe("Send", () => {
     beforeEach(() => {
-      mandril = new MandrilService(app);
+      mandril = new MandrillService(app);
     });
 
     it("should send an email", (done) => {
