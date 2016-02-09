@@ -1,12 +1,12 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 12:17:34
-* @Last Modified 2016-01-26
+* @Last Modified 2016-02-09
 */
 
 'use strict';
 
-import Mailer from '../src/Mailer'
+import Mailer from '../src'
 import MandrillService from '../src/MandrillService'
 
 import TestApp from '@nxus/core/lib/test/support/TestApp';
@@ -41,42 +41,11 @@ describe("Mailer", () => {
       });
     });
 
-    it("should register a gather for models", () => {
+    it("should register a gather for mail services", () => {
       return app.emit('load').then(() => {
         app.get.calledWith('mailer').should.be.true;
         app.get().gather.calledWith('service').should.be.true;
       });
     })
   });
-})
-
-describe("MandrilService", () => {
-  var app = new TestApp();
-  var mandril
- 
-  beforeEach(() => {
-    app = new TestApp();
-    app.config = Object.assign(app.config, process.env);
-  });
-  describe("Send", () => {
-    beforeEach(() => {
-      mandril = new MandrillService(app);
-    });
-
-    it("should send an email", (done) => {
-      return app.emit('startup').then(() => {
-        var message = "test email body"
-        var to = "mjreich@gmail.com"
-        var subject = "test email subject"
-        var opts = {}
-        var from = app.config.FROM_EMAIL
-        return mandril.sendMessage(to, from, subject, message, opts).then((status) => {
-          status.length.should.be.above(0)
-          status[0].should.have.property('status')
-          status[0].status.should.equal('sent')
-          done()
-        }).catch(done)
-      });
-    })
-  })
 })

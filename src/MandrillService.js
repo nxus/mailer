@@ -1,7 +1,7 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 12:02:01
-* @Last Modified 2016-01-26
+* @Last Modified 2016-02-09
 */
 
 'use strict';
@@ -18,8 +18,8 @@ export default class MandrillSerivce {
   
   constructor(app) {
     this.app = app;
-    app.get('mailer').provide('service', this)
-    this.api_key = app.config.MANDRILL_APIKEY || app.config.mailer.api_key
+    app.get('mailer').service(this)
+    this.api_key = app.config.MANDRILL_APIKEY || (app.config.mailer && app.config.mailer.api_key)
     if(!this.api_key) throw new Error('No Mandrill APIKEY specified');
   }
 
