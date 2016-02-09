@@ -1,7 +1,7 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 11:48:16
-* @Last Modified 2016-01-26
+* @Last Modified 2016-02-04
 */
 
 'use strict';
@@ -14,7 +14,7 @@ export default class Mailer {
     this.app = app;
     this.mailer = app.get('mailer')
 
-    if(this.app.config.MANDRILL_APIKEY || app.config.mandrill.api_key) new MandrillService(app)
+    if((app.config.mandrill && app.config.mandrill.api_key) || this.app.config.MANDRILL_APIKEY) new MandrillService(app)
 
     this._services = [];
     this.mailer.gather('service', this._registerService.bind(this))
