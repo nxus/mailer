@@ -2,7 +2,7 @@
   "name": "@nxus/mailer",
   "version": "2.0.0",
   "description": "A Nxus module for sending emails.",
-  "main": "./lib/Mailer.js",
+  "main": "./lib/",
   "scripts": {
     "test": "NODE_ENV=test mocha --compilers js:babel/register -R spec",
     "compile": "babel --optional runtime -d lib/ src/",
