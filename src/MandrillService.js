@@ -1,7 +1,7 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 12:02:01
-* @Last Modified 2016-02-09
+* @Last Modified 2016-02-20
 */
 
 'use strict';
@@ -24,6 +24,7 @@ export default class MandrillSerivce {
   }
 
   sendMessage(to, from, subject, content, opts) {
+    this.app.log.debug('Sending email via Mandril to', to)
     if(!_.isArray(to)) to = [to]
     to = _.map(to, (email) => {
       return {email}
