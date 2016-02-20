@@ -14,6 +14,9 @@ import Mandrill from 'mandrill-api/mandrill';
 
 const mailerConfig = {}
 
+/**
+ * A default service for mailing with Mandrill.
+ */
 export default class MandrillSerivce {
   
   constructor(app) {
