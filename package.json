@@ -29,8 +29,8 @@
   "dependencies": {
     "babel-runtime": "^5.7.0",
     "bluebird": "^3.0.5",
-    "mandrill-api": "^1.0.45",
     "moment": "^2.11.1",
+    "sendgrid": "^2.0.0",
     "underscore": "^1.7.0"
   },
   "peerDependencies": {

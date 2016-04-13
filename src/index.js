@@ -1,7 +1,7 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 11:48:16
-* @Last Modified 2016-02-20
+* @Last Modified 2016-04-12
 */
 /**
  * [![Build Status](https://travis-ci.org/nxus/mailer.svg?branch=master)](https://travis-ci.org/nxus/mailer)
@@ -32,8 +32,8 @@
  * 
  * The opts hash can be used to send service specific opts back to the mail handler.  For example:
  * 
- *     // Mandrill opts
- *     app.get('mailer').send('to@address', 'from@address', "My subject", "Body content", { async: true })
+ *     // SendGrid opts
+ *     app.get('mailer').send('to@address', 'from@address', "My subject", "Body content", {html: "<p>Html content</p>"})
  * 
  * # API
  * ----
@@ -41,7 +41,7 @@
 
 'use strict';
 
-import MandrillService from './MandrillService'
+import SendgridService from './SendgridService'
 
 /**
  * The main Mailer class.
@@ -53,7 +53,7 @@ export default class Mailer {
     app.get('mailer').use(this)
     .gather('service')
 
-    if((app.config.mandrill && app.config.mandrill.api_key) || this.app.config.MANDRILL_APIKEY) new MandrillService(app)
+    if((app.config.sendgrid && app.config.sendgrid.api_username) || this.app.config.SENDGRID_USERNAME) new SendgridService(app)
 
     this._services = [];
   }
