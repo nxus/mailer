@@ -22,6 +22,12 @@ Each service is expected to implement a method called `sendMessage` with the sig
     ...
     }
 
+Alternatively, you can specify an array of to addresses:
+
+    sendMessage([toAddress, toAddress2], from, subject, content, opts) {
+    ...
+    }
+
 #### Send an email using a service
 
     app.get('mailer').send('to@address', 'from@address', "My subject", "Body content", {some: opts})
@@ -30,8 +36,8 @@ Each service is expected to implement a method called `sendMessage` with the sig
 
 The opts hash can be used to send service specific opts back to the mail handler.  For example:
 
-    // Mandrill opts
-    app.get('mailer').send('to@address', 'from@address', "My subject", "Body content", { async: true })
+    // SendGrid opts
+    app.get('mailer').send('to@address', 'from@address', "My subject", "Body content", {html: "<p>Html content</p>"})
 
 ## API
 
@@ -49,6 +55,6 @@ Register a service.  See MandrillService for an example.
 
 -   `service` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** a Class or callable that implements a method called `sendMessage`.
 
-## MandrillSerivce
+## SendgridService
 
 A default service for mailing with Mandrill.
