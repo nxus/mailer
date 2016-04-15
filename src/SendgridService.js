@@ -1,7 +1,7 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 12:02:01
-* @Last Modified 2016-04-12
+* @Last Modified 2016-04-14
 */
 
 'use strict';
@@ -9,6 +9,7 @@
 import _ from 'underscore';
 import moment from 'moment';
 import Promise from 'bluebird';
+import marked from 'marked';
 
 import SendGrid from 'sendgrid';
 
@@ -32,7 +33,7 @@ export default class SendgridService {
     if(!_.isArray(to)) to = [to]
     return Promise.each(to, (t) => {
       var message = _.extend({to: t, subject, text, from}, opts);
-      console.log('message', message)
+      if(opts.html && text == opts.html) opts.html = marked(opts.html)
       return new Promise((resolve, reject) => {
         this.client.send(message, (err, json) => {
           if(err) console.log(err)
