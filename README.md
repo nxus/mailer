@@ -1,4 +1,4 @@
-# @nxus/mailer
+# nxus-mailer
 
 ## 
 
