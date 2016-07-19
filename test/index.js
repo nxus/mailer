@@ -1,7 +1,7 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 12:17:34
-* @Last Modified 2016-04-13
+* @Last Modified 2016-05-20
 */
 
 'use strict';
@@ -9,7 +9,7 @@
 import Mailer from '../src'
 import SendgridService from '../src/SendgridService'
 
-import TestApp from '@nxus/core/lib/test/support/TestApp';
+import TestApp from 'nxus-core/lib/test/support/TestApp';
 
 describe("Mailer", () => {
   var mailer;

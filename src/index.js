@@ -1,7 +1,7 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 11:48:16
-* @Last Modified 2016-04-15
+* @Last Modified 2016-05-20
 */
 /**
  * [![Build Status](https://travis-ci.org/nxus/mailer.svg?branch=master)](https://travis-ci.org/nxus/mailer)
@@ -10,7 +10,7 @@
  * 
  * ## Installation
  * 
- *     > npm install @nxus/mailer --save
+ *     > npm install nxus-mailer --save
  * 
  * ## Usage
  * 
