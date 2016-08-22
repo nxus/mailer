@@ -8,7 +8,7 @@ A Nxus module for sending emails through different services.
 
 ### Installation
 
-    > npm install @nxus/mailer --save
+    > npm install nxus-mailer --save
 
 ### Usage
 
@@ -43,11 +43,11 @@ The opts hash can be used to send service specific opts back to the mail handler
 
 * * *
 
-## Mailer
+## index
 
 The main Mailer class.
 
-### service
+## service
 
 Register a service.  See MandrillService for an example.
 
