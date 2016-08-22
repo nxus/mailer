@@ -1,6 +1,6 @@
 {
   "name": "nxus-mailer",
-  "version": "3.0.0-0",
+  "version": "3.0.0",
   "description": "A Nxus module for sending emails.",
   "main": "lib",
   "scripts": {
