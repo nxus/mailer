@@ -47,28 +47,34 @@
 
 'use strict';
 
+import {application, NxusModule} from 'nxus-core'
+
 import SendgridService from './SendgridService'
 
 /**
  * The main Mailer class.
  */
-export default class Mailer {
+class Mailer extends NxusModule {
 
-  constructor(app) {
-    this.app = app;
-    app.get('mailer').use(this)
-    .gather('service')
+  constructor() {
+    super()
+    if((application.config.sendgrid && application.config.sendgrid.api_username) || application.config.SENDGRID_USERNAME) new SendgridService(app)
 
-    if((app.config.sendgrid && app.config.sendgrid.api_username) || this.app.config.SENDGRID_USERNAME) new SendgridService(app)
-
-    this._services = [];
+    this._service = null
   }
 
   /**
-   * Register a service.  See MandrillService for an example.
+   * Register a service.  See SendgridService for an example.
    * @param  {function} service a Class or callable that implements a method called `sendMessage`.
    */
   service(service) {
-    this.respond('send', service.sendMessage.bind(service))
+    this._service = service
+  }
+
+  send() {
+    this.service.apply(null, arguments)
   }
 } 
+
+let mailer = Mailer.getProxy()
+export {Mailer as default, mailer}
