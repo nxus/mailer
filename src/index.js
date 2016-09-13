@@ -1,8 +1,13 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 11:48:16
-* @Last Modified 2016-05-20
+* @Last Modified 2016-09-13
 */
+
+'use strict';
+
+import {application, NxusModule} from 'nxus-core'
+
 /**
  * [![Build Status](https://travis-ci.org/nxus/mailer.svg?branch=master)](https://travis-ci.org/nxus/mailer)
  * 
@@ -41,18 +46,6 @@
  *     // SendGrid opts
  *     app.get('mailer').send('to@address', 'from@address', "My subject", "Body content", {html: "<p>Html content</p>"})
  * 
- * # API
- * ----
- */
-
-'use strict';
-
-import {application, NxusModule} from 'nxus-core'
-
-import SendgridService from './SendgridService'
-
-/**
- * The main Mailer class.
  */
 class Mailer extends NxusModule {
 
@@ -60,7 +53,7 @@ class Mailer extends NxusModule {
     super()
     if((application.config.sendgrid && application.config.sendgrid.api_username) || application.config.SENDGRID_USERNAME) new SendgridService(app)
 
-    this._service = null
+    this._services = []
   }
 
   /**
@@ -68,11 +61,22 @@ class Mailer extends NxusModule {
    * @param  {function} service a Class or callable that implements a method called `sendMessage`.
    */
   service(service) {
-    this._service = service
+    this._services.push(service)
   }
 
-  send() {
-    this.service.apply(null, arguments)
+  /**
+   * Sends an email.  Should be overridden by the sending service, but generally will take the following parameters
+   * @param  {String} to      The email address to send to
+   * @param  {String} from    The from email to send from
+   * @param  {String} subject The subject text
+   * @param  {String} body    The message text
+   * @param  {Object} options An objects containing 
+   * @return {[type]}         [description]
+   */
+  send(...args) {
+    this._services.forEach((service) => {
+      service.send(...args)
+    })
   }
 } 
 

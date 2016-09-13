@@ -1,7 +1,7 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 12:02:01
-* @Last Modified 2016-04-14
+* @Last Modified 2016-09-13
 */
 
 'use strict';
@@ -13,24 +13,42 @@ import marked from 'marked';
 
 import SendGrid from 'sendgrid';
 
-
 import {application as app, NxusModule} from 'nxus-core'
-import {mailer} from './index'
+import {mailer} from '../../'
 
 /**
  * A default service for mailing with Sendgrid.
  */
-export default class SendgridService extends NxusModule {
+class Sendgrid extends NxusModule {
   constructor() {
     super()
+
+    if(!this.config.apiUsername || !this.config.apiPassword) {
+      this.log.warn('No SendGrid credentials specified, ignoring. To use sendGrid, set apiUsername and apiKey in .nxusrc');
+      return
+    }
+
     mailer.service(this)
-    this.api_username = app.config.SENDGRID_USERNAME || (app.config.sendgrid && app.config.sendgrid.api_username)
-    this.api_password = app.config.SENDGRID_PASSWORD || (app.config.sendgrid && app.config.sendgrid.api_password)
-    if(!this.api_username || !this.api_password) throw new Error('No SendGrid credentials specified');
-    this.client = new SendGrid(this.api_username, this.api_password);
+    
+    this.client = new SendGrid(this.config.apiUsername, this.config.apiPassword);
   }
 
-  sendMessage(to, from, subject, text, opts) {
+  _userConfig() {
+    return {
+      apiUsername: "",
+      apiPassword: ""
+    }
+  }
+
+  /**
+   * Sends an email via sendgrid
+   * @param  {String} to      [description]
+   * @param  {String} from    [description]
+   * @param  {String} subject [description]
+   * @param  {String} text    [description]
+   * @param  {Object} opts    [description]
+   */
+  send(to, from, subject, text, opts) {
     this.log.debug('Sending email via SendGrid to', to)
     if(!_.isArray(to)) to = [to]
     return Promise.each(to, (t) => {
@@ -46,3 +64,7 @@ export default class SendgridService extends NxusModule {
     })
   }
 }
+
+var sendgrid = Sendgrid.getProxy()
+
+export {Sendgrid as default, sendgrid}
