@@ -1,13 +1,13 @@
 /* 
 * @Author: Mike Reich
 * @Date:   2016-01-26 12:17:34
-* @Last Modified 2016-05-20
+* @Last Modified 2016-09-13
 */
 
 'use strict';
 
 import Mailer from '../src'
-import SendgridService from '../src/SendgridService'
+//import SendgridService from '../src/SendgridService'
 
 describe("Mailer", () => {
   var mailer;
@@ -15,7 +15,7 @@ describe("Mailer", () => {
   describe("Load", () => {
     it("should not be null", () => {
       Mailer.should.not.be.null
-      SendgridService.should.not.be.null
+      //SendgridService.should.not.be.null
     })
 
     it("should be instantiated", () => {
