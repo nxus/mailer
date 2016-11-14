@@ -51,7 +51,6 @@ class Mailer extends NxusModule {
 
   constructor() {
     super()
-    if((application.config.sendgrid && application.config.sendgrid.api_username) || application.config.SENDGRID_USERNAME) new SendgridService(app)
 
     this._services = []
   }
