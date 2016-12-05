@@ -21,7 +21,7 @@ import {application, NxusModule} from 'nxus-core'
  * 
  * ### Register a mail service
  * 
- *     app.get('mailer').service(myService)
+ *     mailer.service(myService)
  * 
  * Each service is expected to implement a method called `sendMessage` with the signature
  * 
@@ -37,14 +37,14 @@ import {application, NxusModule} from 'nxus-core'
  * 
  * ### Send an email using a service
  * 
- *     app.get('mailer').send('to@address', 'from@address', "My subject", "Body content", {some: opts})
+ *     mailer.send('to@address', 'from@address', "My subject", "Body content", {some: opts})
  * 
  * #### Opts
  * 
  * The opts hash can be used to send service specific opts back to the mail handler.  For example:
  * 
  *     // SendGrid opts
- *     app.get('mailer').send('to@address', 'from@address', "My subject", "Body content", {html: "<p>Html content</p>"})
+ *     mailer.send('to@address', 'from@address', "My subject", "Body content", {html: "<p>Html content</p>"})
  * 
  */
 class Mailer extends NxusModule {
@@ -70,7 +70,6 @@ class Mailer extends NxusModule {
    * @param  {String} subject The subject text
    * @param  {String} body    The message text
    * @param  {Object} options An objects containing 
-   * @return {[type]}         [description]
    */
   send(...args) {
     this._services.forEach((service) => {
