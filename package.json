@@ -1,6 +1,6 @@
 {
   "name": "nxus-mailer",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "A Nxus module for sending emails.",
   "main": "lib",
   "scripts": {
@@ -28,11 +28,11 @@
   },
   "homepage": "https://github.com/nxus/mailer#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.0",
     "bluebird": "^3.4.6",
     "marked": "^0.3.5",
     "moment": "^2.14.1",
     "nxus-core": "^4.0.0",
-    "sendgrid": "^2.0.0",
     "underscore": "^1.7.0"
   },
   "devDependencies": {
