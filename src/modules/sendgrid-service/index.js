@@ -11,7 +11,7 @@ import moment from 'moment';
 import Promise from 'bluebird';
 import marked from 'marked';
 
-import SendGrid from 'sendgrid';
+import SendGrid from '@sendgrid/mail';
 
 import {application as app, NxusModule} from 'nxus-core'
 import {mailer} from '../../'
@@ -23,26 +23,24 @@ class Sendgrid extends NxusModule {
   constructor() {
     super()
 
-    if(!this.config.apiUsername || !this.config.apiPassword) {
-      this.log.warn('No SendGrid credentials specified, ignoring. To use sendGrid, set apiUsername and apiKey in .nxusrc');
+    if(!this.config.apiKey) {
+      this.log.warn('No SendGrid credentials specified, ignoring. To use sendGrid, set apiKey in .nxusrc');
       return
     }
 
     mailer.service(this)
-    
-    this.client = new SendGrid(this.config.apiUsername, this.config.apiPassword);
+    SendGrid.setApiKey(this.config.apiKey)
   }
 
   _userConfig() {
     return {
-      apiUsername: "",
-      apiPassword: ""
+      apiKey: "",
     }
   }
 
   /**
    * Sends an email via sendgrid
-   * @param  {String} to      [description]
+   * @param  {String} to      email address, or array of email addresses
    * @param  {String} from    [description]
    * @param  {String} subject [description]
    * @param  {String} text    [description]
@@ -50,18 +48,13 @@ class Sendgrid extends NxusModule {
    */
   send(to, from, subject, text, opts) {
     this.log.debug('Sending email via SendGrid to', to)
-    if(!_.isArray(to)) to = [to]
-    return Promise.each(to, (t) => {
-      var message = _.extend({to: t, subject, text, from}, opts);
-      if(opts.html && text == opts.html) opts.html = marked(opts.html)
-      return new Promise((resolve, reject) => {
-        this.client.send(message, (err, json) => {
-          if(err) console.log(err)
-          if(err) return reject(err)
-          return resolve(json)
-        })
-      })
-    })
+    let isMultiple = false
+    // This instructs sendgrid to send messages to each recipient, rather than one to all of them
+    // So can override in opts if needed
+    if(_.isArray(to)) isMultiple = true
+    var message = _.extend({to, subject, text, from, isMultiple}, opts);
+    if(opts.html && text == opts.html) opts.html = marked(opts.html)
+    return SendGrid.send(message)
   }
 }
 
