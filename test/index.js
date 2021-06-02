@@ -4,36 +4,34 @@
 * @Last Modified 2016-09-13
 */
 
-'use strict';
+'use strict'
 
 import Mailer from '../src'
-//import SendgridService from '../src/SendgridService'
 
 describe("Mailer", () => {
-  var mailer;
+  let mailer
    
   describe("Load", () => {
     it("should not be null", () => {
-      Mailer.should.not.be.null
-      //SendgridService.should.not.be.null
+      expect(Mailer).not.toBeNull()
     })
 
     it("should be instantiated", () => {
-      mailer = new Mailer();
-      mailer.should.not.be.null;
-    });
-  });
+      mailer = new Mailer()
+      expect(mailer).not.toBeNull()
+    })
+  })
 
   describe("Init", () => {
     beforeEach(() => {
-      mailer = new Mailer();
-    });
+      mailer = new Mailer()
+    })
 
     it("should register a gather for mail services", () => {
-      mailer.service.should.not.be.null
+      expect(mailer.service).not.toBeNull()
     })
     it("should register a gather for mail send", () => {
-      mailer.send.should.not.be.null
+      expect(mailer.send).not.toBeNull()
     })
-  });
+  })
 })
