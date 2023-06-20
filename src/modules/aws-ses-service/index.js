@@ -18,7 +18,7 @@ import {mailer} from '../../'
  *     *   `accessKeyId`
  *     *   `secretAccessKey`
  */
-class AwsSES extends NxusModule {
+class MailerAwsSES extends NxusModule {
   constructor() {
     super()
 
@@ -27,8 +27,8 @@ class AwsSES extends NxusModule {
       return
     }
 
-    this.config = {...AwsSES._defaultConfig, ...this.config,
-      credentials: {...AwsSES._defaultConfig.credentials, ...this.config.credentials} }
+    this.config = {...MailerAwsSES._defaultConfig, ...this.config,
+      credentials: {...MailerAwsSES._defaultConfig.credentials, ...this.config.credentials} }
     this._sesClient = new SESClient({region: this.config.region, credentials: this.config.credentials})
 
     mailer.service(this)
@@ -78,12 +78,12 @@ class AwsSES extends NxusModule {
       await this._sesClient.send(cmd)
     }
     catch (e) {
-      console.log.debug(`Sending email via AWS SES failed, ${e.message}`)
+      this.log.debug(`Sending email via AWS SES failed, ${e.message}`)
     }
   }
 
 }
 
-let awsSES = AwsSES.getProxy()
+let mailerAwsSES = MailerAwsSES.getProxy()
 
-export {AwsSES as default, awsSES}
+export {MailerAwsSES as default, mailerAwsSES}
