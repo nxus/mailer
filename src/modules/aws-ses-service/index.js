@@ -49,9 +49,11 @@ class MailerAwsSES extends NxusModule {
    * @param  {String} subject - message subject
    * @param  {String} content - message content, either HTML or plain
    *   text; if HTML, a plain text fallback will also be sent
-   * @param  {Object} options, added to the message data passed to the
-   *   SES `SendEmailCommand` object (e.g. ConfigurationSetName,
-   *   ReturnPath)
+   * @param  {Object} options:
+   * *   `html` - HTML message content
+   * *   other options are added to the message data passed to the SES
+   *     `SendEmailCommand` object (e.g. ConfigurationSetName,
+   *     ReturnPath)
    */
   async send(to, from, subject, content, options) {
     if (!Array.isArray(to)) to = [to]
@@ -59,12 +61,16 @@ class MailerAwsSES extends NxusModule {
     this.log.debug(`Sending email via AWS SES to ${to.join(', ')}`)
 
     let body = {}
-    if (!isHTML(content))
-      body.Text = {Charset: 'UTF-8', Data: content}
-    else {
+    if (isHTML(content))
       body.Html = {Charset: 'UTF-8', Data: content}
-      body.Text = {Charset: 'UTF-8', Data: htmlToText(content, {}) }
+    else
+      body.Text = {Charset: 'UTF-8', Data: content}
+    if (options.html) {
+      body.Html = {Charset: 'UTF-8', Data: options.html}
+      delete options.html
     }
+    if (!body.Text)
+      body.Text = {Charset: 'UTF-8', Data: htmlToText(body.Html || '', {}) }
 
     let cmd = new SendEmailCommand({
       ...options,
