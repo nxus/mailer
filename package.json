@@ -3,6 +3,9 @@
   "version": "4.1.0",
   "description": "A Nxus module for sending emails.",
   "main": "lib",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "preversion": "npm test",
     "postversion": "npm run build-docs && git push && git push --tags",
@@ -28,6 +31,7 @@
   },
   "homepage": "https://github.com/nxus/mailer#readme",
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.354.0",
     "@sendgrid/mail": "^7.4.4",
     "bluebird": "^3.4.6",
     "documentation": "^13.2.5",
